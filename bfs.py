@@ -8,7 +8,7 @@ def draw(mat, start, goal, drawfinal = False):
     m[start[0]][start[1]] = 3
     m[goal[0]][goal[1]] = 3
 
-    images.append(cv2.resize(m * 80, (800, 800), interpolation = cv2.INTER_NEAREST))
+    images.append(cv2.resize(m * 80, (300, 300), interpolation = cv2.INTER_NEAREST))
     cv2.imshow("BFS", images[-1])
     if cv2.waitKey(1) == ord('q'):
         exit()
