@@ -1,29 +1,15 @@
 import cv2
 import numpy as np
+import imageio
 
+images =[ ]
 def draw(mat, start, goal, drawfinal = False):
     m = mat.copy()
     m[start[0]][start[1]] = 3
     m[goal[0]][goal[1]] = 3
 
-    # draw path from goal to start
-    s = goal
-    while drawfinal and s != start:
-        if s[0] < len(mat) - 1 and m[s[0] + 1][s[1]] == 2:
-            m[s[0] + 1][s[1]] = 4
-            s = (s[0] + 1, s[1])
-        elif s[0] > 0 and m[s[0] - 1][s[1]] == 2:
-            m[s[0] - 1][s[1]] = 4
-            s = (s[0] - 1, s[1])
-        elif s[1] < len(mat[0]) - 1 and m[s[0]][s[1] + 1] == 2:
-            m[s[0]][s[1] + 1] = 4
-            s = (s[0], s[1] + 1)
-        elif s[1] > 0 and m[s[0]][s[1] - 1] == 2:
-            m[s[0]][s[1] - 1] = 4
-            s = (s[0], s[1] - 1)
-    
-
-    cv2.imshow("BFS", cv2.resize(m * 80, (800, 800), interpolation = cv2.INTER_NEAREST))
+    images.append(cv2.resize(m * 80, (800, 800), interpolation = cv2.INTER_NEAREST))
+    cv2.imshow("BFS", images[-1])
     if cv2.waitKey(1) == ord('q'):
         exit()
 
@@ -79,7 +65,7 @@ if __name__ == "__main__":
     #     [0, 1, 0, 1, 0, 1, 0, 0, 1, 0],
     #     [0, 1, 0, 1, 0, 1, 0, 0, 1, 0],
     # ]
-    mat = np.random.randn(50, 50).astype(np.uint8)
+    mat = np.random.randn(30, 30).astype(np.uint8)
     thresh = 0.9
     newmat = mat.copy()
     newmat[mat > thresh] = 1
@@ -92,5 +78,5 @@ if __name__ == "__main__":
     (bfs(newmat, start, end))
 
     # cv2.imshow("BFS", cv2.resize(mat * 127, (500, 500), interpolation = cv2.INTER_NEAREST))
-    draw(mat,start, end, True)
-    cv2.waitKey(0)
+    print('saving')
+    imageio.mimwrite('gifs/bfs.gif', images, fps=60)
