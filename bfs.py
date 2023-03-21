@@ -70,7 +70,7 @@ if __name__ == "__main__":
     newmat = mat.copy()
     newmat[mat > thresh] = 1
     newmat[mat <= thresh] = 0
-    start = (1, 0)
+    start = (mat.shape[0]//2 - 1, mat.shape[1]//2 - 1)
     end = (mat.shape[0] - 1, mat.shape[1] - 1)
     
     newmat[start[0]][start[1]] = 0
